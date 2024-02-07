@@ -4,6 +4,7 @@ class Item :
     #defining class attribute 
     pay_rate = 0.8 
     all = []
+    
     def __init__(self, name:str, price:float, quantity=0):
 
         #run validations to check price, quantity
