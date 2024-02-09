@@ -1,75 +1,26 @@
-import csv 
-
-class Item :
-    #defining class attribute 
-    pay_rate = 0.8 
-    all = []
-    
-    def __init__(self, name:str, price:float, quantity=0):
-
-        #run validations to check price, quantity
-        assert price>=0, f"Entered price {price} is not greater than or equal to 0!"
-        assert quantity>=0, f"Entered quantity {quantity} is not greater than or equal to 0!"
-
-        #assign attributes to self object 
-        self.name = name
-        self. price = price
-        self.quantity = quantity 
-
-        Item.all.append(self)   
-
-    def calculate_total_price(self):
-        return self.price*self.quantity
-    
-    def apply_discount(self):
-        self.price = self.price * self.pay_rate
-
-    @classmethod
-    def instantiate_from_csv(cls):
-        with open(r'C:\Users\rrajj\OneDrive\Desktop\Python\OOPs_freeCodeCamp\items.csv', 'r') as f :
-            reader = csv.DictReader(f)
-            items = list(reader)    
-
-        for item in items :
-            print(item)
-
-    #static methods 
-    @staticmethod
-    def is_integer(num):
-        #don't count floats that have point zero
-        if isinstance(num, float):
-            return num.is_integer()
-        elif isinstance(num, int):
-            return True 
-        else:
-            return False  
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity})"   #{self.__class__.name__}: is used to access the name of the class
+# from item import Item 
+from phone import Phone 
+from keyboard import Keyboard
 
 
+# Item.instantiate_from_csv()#------------------
+# item1 = Item("MyItem", 750) 
+#setting an attribute 
+# item1.name = "OtherItem" 
+
+#READ ONLY
+#will not update unless we give _name. To make it read-only, give double underscore
+#double underscore prevents access of those attributes from outside the class 
+#we can't access it from double underscore now. Will have to read it as a property now only
+
+#We can again set a different value by using setters through @name.setter 
+# print(item1.__name)
+# print(item1.price)
+#---------------------------Lab 2 
 
 
 #inheritance : child class phone
     
-class Phone(Item):
-        
-        def __init__(self, name: str, price: float, quantity=0, broken_phones=0):
-          #call to super function to have access to all attrobutes and methonds
-          super().__init__(name, price, quantity)
-
-        #run validations to check price, quantity
-          assert broken_phones>=0, f"Broken phones {broken_phones} is not greater than or equal to 0!"
-
-        #assign attributes to self object 
-          self.broken_phones = broken_phones 
-
- 
-
-
-
-
-
 # Item.instantiate_from_csv()
 # print(Item.is_integer(7.09))
     
@@ -78,14 +29,58 @@ class Phone(Item):
 #same class as the previous one as it might not be useful for other itmes we create. It might be useful for phone but not for other items. 
 #we create a new class phone which will inherit all the properties of class also 
 #there are child classes and parent classes. 
-
-
-phone1 = Phone("phone10", 500, 5, 1)
-
-#by using the super function we call this attribute of phone into class also 
-print(Item.all)
-print(Phone.all)
-
-
-
  
+
+#--------------------------------encapsulation
+# It describes the idea of wrapping data and the methods that work on
+# data within one unit. This puts restrictions on accessing variables
+# and methods directly and can prevent the accidental modification of data.
+# To prevent accidental change, an object’s variable can only be changed by
+# an object’s method. Those types of variables are known as private variables.
+
+# item1 = Item("MyItem", 750)
+# item1.apply_increment(0.2)
+# item1.apply_discount()
+# print(item1.price)
+
+#--------------------------------abstration
+# Data abstraction is one of the most essential concepts of Python OOPs which 
+# is used to hide irrelevant details from the user and show the details that 
+# are relevant to the users.
+
+# Data abstraction in Python is a programming concept that hides complex 
+# implementation details while exposing only essential information and
+#  functionalities to users. In Python, we can achieve data abstraction
+#  by using abstract classes and abstract classes can be created using
+#  abc (abstract base class) module and abstractmethod of abc module.
+#In other languages, there are public and private variables which do the same.
+#abstract the informatin that is unecessary from your instances 
+
+
+# item1 = Item("MyItem", 750, 6)
+
+# item1.send_email()
+
+#________________________________________________________
+
+#INHERITANCE 
+# It allow us to reuse our code across our classes. We have created many classes here which are child 
+# classes of the item class. Each child class represents a type of item. 
+
+# item1 = Phone("jscPhone", 1000, 3)
+# item1.apply_increment(0.2)
+# item1.apply_discount()                #we can use it on the phone class even when it was never implemented in it due to polymorphism 
+
+# print(item1.price)
+
+
+#------------------------------------------------------------------
+#POLYMORPHISM
+#we can use apply_discount on several classes 
+
+item1 = Keyboard("jscKeyboard", 1000, 3)
+
+#we have fixed a different pay_rate for keyboard but the method is the same 
+item1.apply_discount()
+
+print(item1.price)
